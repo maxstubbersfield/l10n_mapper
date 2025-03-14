@@ -90,7 +90,7 @@ class L10nMapperGenerator extends Generator {
 
             bufferL10nHelper.writeln('class L10nHelper {');
             bufferL10nHelper.writeln(
-                'static String parseL10n($className localizations, String translationKey, {List<Object>? arguments}) {');
+                'static String? parseL10n($className localizations, String translationKey, {List<Object>? arguments}) {');
 
             bufferL10nHelper.writeln('const mapper = $mapperName();');
             bufferL10nHelper.writeln('final object = mapper.toLocalizationMap(localizations)[translationKey];');
