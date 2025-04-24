@@ -23,11 +23,14 @@ class L10nMapperGenerator extends Generator {
   //? nullable values when key is not found but will return specified error message instead
   final String? message;
 
+  final bool useNamedParameters;
+
   L10nMapperGenerator({
     required this.l10n,
     required this.locale,
     required this.parseL10n,
     required this.message,
+    required this.useNamedParameters,
     this.classNames = const [],
   });
 
@@ -150,9 +153,18 @@ class L10nMapperGenerator extends Generator {
 
           // skips gen-exceptions
           if (genExceptions.contains(name)) continue;
-          final parameters = method.parameters.map((e) => e.name).join(', ');
 
-          buffer.writeln("'$name': ($parameters) => localizations.$name($parameters),");
+          if (useNamedParameters && method.parameters.isNotEmpty) {
+            // Named parameters
+            final paramNames = method.parameters.map((e) => e.name).toList();
+            final paramDeclaration = paramNames.map((name) => 'required $name').join(', ');
+            final namedParams = paramNames.map((name) => '$name: $name').join(', ');
+            buffer.writeln("'$name': ({$paramDeclaration}) => localizations.$name($namedParams),");
+          } else {
+            // Positional parameters
+            final parameters = method.parameters.map((e) => e.name).join(', ');
+            buffer.writeln("'$name': ($parameters) => localizations.$name($parameters),");
+          }
         }
 
         buffer.writeln('};');
