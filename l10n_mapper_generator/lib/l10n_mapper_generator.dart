@@ -45,10 +45,10 @@ class L10nMapperGenerator extends Generator {
     for (var classElement in library.classes.where((c) => c.isAbstract)) {
       if (classNames.contains(classElement.displayName)) {
         final className = classElement.displayName;
-        final localizationPath = classElement.source.uri;
+        final localizationPath = classElement.firstFragment.libraryFragment.source.uri;
         final mapperName = '${className}Mapper';
         final appLocalizationsExtensionName = '${className}Extension';
-        final buildContextExtensionName = 'BuildContextExtension';
+        const buildContextExtensionName = 'BuildContextExtension';
 
         final nullable = message == null;
         final shouldGenerateExtensions = l10n || locale || parseL10n;
@@ -138,8 +138,8 @@ class L10nMapperGenerator extends Generator {
 
         buffer.writeln('return {');
         // all getters
-        for (final field in classElement.fields) {
-          final name = field.name;
+        for (final field in classElement.fields2) {
+          final name = field.name3;
 
           // skips gen-exceptions
           if (genExceptions.contains(name)) continue;
@@ -148,21 +148,21 @@ class L10nMapperGenerator extends Generator {
         }
 
         // all methods
-        for (final method in classElement.methods) {
-          final name = method.name;
+        for (final method in classElement.methods2) {
+          final name = method.name3;
 
           // skips gen-exceptions
           if (genExceptions.contains(name)) continue;
 
-          if (useNamedParameters && method.parameters.isNotEmpty) {
+          if (useNamedParameters && method.typeParameters2.isNotEmpty) {
             // Named parameters
-            final paramNames = method.parameters.map((e) => e.name).toList();
+            final paramNames = method.formalParameters.map((e) => e.name3).toList();
             final paramDeclaration = paramNames.map((name) => 'required $name').join(', ');
             final namedParams = paramNames.map((name) => '$name: $name').join(', ');
             buffer.writeln("'$name': ({$paramDeclaration}) => localizations.$name($namedParams),");
           } else {
             // Positional parameters
-            final parameters = method.parameters.map((e) => e.name).join(', ');
+            final parameters = method.formalParameters.map((e) => e.name3).join(', ');
             buffer.writeln("'$name': ($parameters) => localizations.$name($parameters),");
           }
         }
