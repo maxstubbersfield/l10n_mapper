@@ -154,7 +154,7 @@ class L10nMapperGenerator extends Generator {
           // skips gen-exceptions
           if (genExceptions.contains(name)) continue;
 
-          if (useNamedParameters && method.typeParameters2.isNotEmpty) {
+          if (useNamedParameters && method.formalParameters.isNotEmpty) {
             // Named parameters
             final paramNames = method.formalParameters.map((e) => e.name3).toList();
             final paramDeclaration = paramNames.map((name) => 'required $name').join(', ');
