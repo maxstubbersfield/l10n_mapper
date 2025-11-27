@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // L10nMapperGenerator
@@ -2497,8 +2497,8 @@ class AppLocalizationsMapper {
           localizations.cashierYourAreSpending(amount, currency),
       'errorsExchangeMinWithdraw': (currency, amount) =>
           localizations.errorsExchangeMinWithdraw(currency, amount),
-      'errorsMinWithdraw': (minAmount, currency, amount) =>
-          localizations.errorsMinWithdraw(minAmount, currency, amount),
+      'errorsMinWithdraw': (amount, currency) =>
+          localizations.errorsMinWithdraw(amount, currency),
       'errorsNoDepositsAvailableAtThisTime': (currency) =>
           localizations.errorsNoDepositsAvailableAtThisTime(currency),
       'errorsNoWithdrawalsAvailableAtThisTime': (currency) =>
