@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-library l10n_mapper_generator;
+library;
 
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';

@@ -138,8 +138,8 @@ class L10nMapperGenerator extends Generator {
 
         buffer.writeln('return {');
         // all getters
-        for (final field in classElement.fields2) {
-          final name = field.name3;
+        for (final field in classElement.fields) {
+          final name = field.name;
 
           // skips gen-exceptions
           if (genExceptions.contains(name)) continue;
@@ -148,21 +148,21 @@ class L10nMapperGenerator extends Generator {
         }
 
         // all methods
-        for (final method in classElement.methods2) {
-          final name = method.name3;
+        for (final method in classElement.methods) {
+          final name = method.name;
 
           // skips gen-exceptions
           if (genExceptions.contains(name)) continue;
 
           if (useNamedParameters && method.formalParameters.isNotEmpty) {
             // Named parameters
-            final paramNames = method.formalParameters.map((e) => e.name3).toList();
+            final paramNames = method.formalParameters.map((e) => e.name).toList();
             final paramDeclaration = paramNames.map((name) => 'required $name').join(', ');
             final namedParams = paramNames.map((name) => '$name: $name').join(', ');
             buffer.writeln("'$name': ({$paramDeclaration}) => localizations.$name($namedParams),");
           } else {
             // Positional parameters
-            final parameters = method.formalParameters.map((e) => e.name3).join(', ');
+            final parameters = method.formalParameters.map((e) => e.name).join(', ');
             buffer.writeln("'$name': ($parameters) => localizations.$name($parameters),");
           }
         }
